@@ -8,6 +8,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(CTest)
 include(FetchContent)
 
 add_subdirectory(apps)
+add_subdirectory(src)
+add_subdirectory(tests)
+
