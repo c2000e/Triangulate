@@ -1,6 +1,7 @@
 #include "Triangulate/vector.h"
 
 #include <cmath>
+#include <iomanip>
 
 Vector::Vector(double x, double y) : x(x), y(y) {}
 
@@ -92,6 +93,7 @@ bool operator!=(const Vector& a, const Vector& b)
 
 std::ostream& operator<<(std::ostream& os, const Vector& v)
 {
-    os << "(" << v.x << ", " << v.y << ")" << std::endl;
+    os << "(" << std::fixed << std::setprecision(2) << v.x << ", " << v.y
+        << ")" << std::endl;
     return os;
 }
