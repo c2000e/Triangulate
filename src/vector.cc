@@ -89,3 +89,9 @@ bool operator!=(const Vector& a, const Vector& b)
 {
     return !(a == b);
 }
+
+std::ostream& operator<<(std::ostream& os, const Vector& v)
+{
+    os << "(" << v.x << ", " << v.y << ")" << std::endl;
+    return os;
+}

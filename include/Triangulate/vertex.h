@@ -3,8 +3,6 @@
 
 #include "Triangulate/vector.h"
 
-#include <iostream>
-
 struct HalfEdge;
 
 struct Vertex

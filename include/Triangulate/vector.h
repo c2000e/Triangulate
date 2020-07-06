@@ -1,6 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <iostream>
+
 const double PI = 3.14159265358979323846;
 
 struct Vector
@@ -29,5 +31,7 @@ double angleBetween(const Vector& a, const Vector& b);
 
 bool operator==(const Vector& a, const Vector& b);
 bool operator!=(const Vector& a, const Vector& b);
+
+std::ostream& operator<<(std::ostream& os, const Vector& v);
 
 #endif
