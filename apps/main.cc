@@ -1,6 +1,18 @@
 #include "SDL.h"
 
+#include "Triangulate/mesh.h"
+
 #include <iostream>
+
+template<>
+void draw(const Mesh& m, SDL_Renderer* renderer)
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0,255);
+    for (const Vertex& v : m.vertices)
+    {
+        SDL_RenderDrawPoint(renderer, v.position.x, v.position.y);
+    }
+}
 
 int main(int argc, char* arv[])
 {
@@ -16,8 +28,11 @@ int main(int argc, char* arv[])
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
+    Mesh m;
+
     SDL_Event event;
     bool running = true;
+    bool redraw = true;
     while (running)
     {
         if (SDL_PollEvent(&event))
@@ -27,13 +42,27 @@ int main(int argc, char* arv[])
                 case SDL_QUIT:
                     running = false;
                     break;
+                case SDL_MOUSEBUTTONDOWN:
+                    if (event.button.button == SDL_BUTTON_LEFT)
+                    {
+                        int x, y;
+                        SDL_GetMouseState(&x, &y);
+                        m.addVertex(x, y);
+                        redraw = true;
+                    }
+                    break;
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
-        SDL_RenderClear(renderer);
+        if (redraw)
+        {
+            SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+            SDL_RenderClear(renderer);
 
-        SDL_RenderPresent(renderer);
+            draw(m, renderer);
+
+            SDL_RenderPresent(renderer);
+        }
     }
     
     SDL_DestroyRenderer(renderer);

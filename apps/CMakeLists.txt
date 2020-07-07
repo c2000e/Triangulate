@@ -10,4 +10,4 @@ set(SDL_SHARED OFF CACHE BOOL "" FORCE)
 
 add_executable(Triangulate main.cc)
 target_compile_features(Triangulate PRIVATE cxx_std_11)
-target_link_libraries(Triangulate PRIVATE SDL2main SDL2-static)
+target_link_libraries(Triangulate PRIVATE TriangulateLib SDL2main SDL2-static)

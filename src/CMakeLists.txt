@@ -1,5 +1,6 @@
 add_library(TriangulateLib STATIC face.cc
                                   half_edge.cc
+                                  mesh.cc
                                   vector.cc
                                   vertex.cc)
 
