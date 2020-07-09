@@ -12,6 +12,12 @@ void draw(const Mesh& m, SDL_Renderer* renderer)
     {
         SDL_RenderDrawPoint(renderer, v.position.x, v.position.y);
     }
+    for (const HalfEdge& e : m.edges)
+    {
+        SDL_RenderDrawLine(renderer, e.origin->position.x,
+            e.origin->position.y, e.twin->origin->position.x,
+            e.twin->origin->position.y);
+    }
 }
 
 int main(int argc, char* arv[])
@@ -29,6 +35,8 @@ int main(int argc, char* arv[])
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
     Mesh m;
+    bool addEdges = false;
+    double firstX, firstY, lastX, lastY;
 
     SDL_Event event;
     bool running = true;
@@ -47,8 +55,29 @@ int main(int argc, char* arv[])
                     {
                         int x, y;
                         SDL_GetMouseState(&x, &y);
-                        m.addVertex(x, y);
+                        if (addEdges)
+                        {
+                            m.addEdge(x, y, lastX, lastY);
+                        }
+                        else
+                        {
+                            m.addVertex(x, y);
+                            firstX = x;
+                            firstY = y;
+                            addEdges = true;
+                        }
+                        lastX = x;
+                        lastY = y;
                         redraw = true;
+                    }
+                    else if (event.button.button == SDL_BUTTON_RIGHT)
+                    {
+                        if (addEdges)
+                        {
+                            m.addEdge(lastX, lastY, firstX, firstY);
+                            addEdges = false;
+                            redraw = true;
+                        }
                     }
                     break;
             }
@@ -62,6 +91,7 @@ int main(int argc, char* arv[])
             draw(m, renderer);
 
             SDL_RenderPresent(renderer);
+            redraw = false;
         }
     }
     
