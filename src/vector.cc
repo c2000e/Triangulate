@@ -81,6 +81,25 @@ static bool equal(const double& a, const double& b)
     return false;
 }
 
+bool cwLess(const Vector& a, const Vector& b, const Vector& c)
+{
+    Vector u = a - c;
+    Vector v = b - c;
+
+    if (u.x >= 0.0 && v.x < 0.0) return true;
+    if (u.x < 0.0 && v.x >= 0.0) return false;
+    if (equal(u.x, 0.0) && equal(v.x, 0.0))
+    {
+        if (u.y >= 0.0 || v.y >= 0.0) return u.y > v.y;
+        return u.y < v.y;
+    }
+
+    double d = det(u, v);
+    if (d < 0.0) return true;
+    if (d > 0.0) return false;
+    return u.sqrMagnitude() > v.sqrMagnitude();
+}
+
 bool operator==(const Vector& a, const Vector& b)
 {
     return equal(a.x, b.x) && equal(a.y, b.y);

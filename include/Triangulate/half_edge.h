@@ -15,6 +15,8 @@ struct HalfEdge
     HalfEdge();
 };
 
+void sortEdgesCW(std::vector<HalfEdge*>& edges, const Vertex* center);
+
 bool operator==(const HalfEdge& a, const HalfEdge& b);
 bool operator!=(const HalfEdge& a, const HalfEdge& b);
 

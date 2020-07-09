@@ -270,3 +270,27 @@ TEST(test_vector, angleBetween)
     ASSERT_DOUBLE_EQ(angleBetween(a, d), PI * 1.5);
     ASSERT_DOUBLE_EQ(angleBetween(d, a), PI * 0.5);
 }
+
+TEST(test_vector, cwLess)
+{
+    Vector center(4.0, -16.0);
+
+    std::vector<Vector> vectors;
+    vectors.push_back(Vector( 0.0,  1.0) + center);
+    vectors.push_back(Vector( 1.0,  1.0) + center);
+    vectors.push_back(Vector( 1.0,  0.0) + center);
+    vectors.push_back(Vector( 1.0, -1.0) + center);
+    vectors.push_back(Vector( 0.0, -1.0) + center);
+    vectors.push_back(Vector(-1.0, -1.0) + center);
+    vectors.push_back(Vector(-1.0,  0.0) + center);
+    vectors.push_back(Vector(-1.0,  1.0) + center);
+
+    for (int i = 0; i < vectors.size() - 1; i++)
+    {
+        for (int j = i + 1; j < vectors.size(); j++)
+        {
+            ASSERT_TRUE(cwLess(vectors[i], vectors[j], center));
+            ASSERT_FALSE(cwLess(vectors[j], vectors[i], center));
+        }
+    }
+}

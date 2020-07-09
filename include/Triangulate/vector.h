@@ -29,6 +29,8 @@ double dot(const Vector& a, const Vector& b);
 double det(const Vector& a, const Vector& b);
 double angleBetween(const Vector& a, const Vector& b);
 
+bool cwLess(const Vector& a, const Vector& b, const Vector& c);
+
 bool operator==(const Vector& a, const Vector& b);
 bool operator!=(const Vector& a, const Vector& b);
 
