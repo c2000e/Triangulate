@@ -5,7 +5,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_executable(TestTriangulateLib test_half_edge.cc 
+add_executable(TestTriangulateLib test_cycle.cc
+                                  test_half_edge.cc 
                                   test_vector.cc)
 
 target_compile_features(TestTriangulateLib PRIVATE cxx_std_11)
