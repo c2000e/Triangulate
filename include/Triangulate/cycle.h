@@ -19,4 +19,6 @@ struct Cycle
     bool isFace() const;
 };
 
+bool operator==(const Cycle& a, const Cycle& b);
+
 #endif
