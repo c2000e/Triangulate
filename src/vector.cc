@@ -75,7 +75,7 @@ double angleBetween(const Vector& a, const Vector& b)
     return t;
 }
 
-static bool equal(const double& a, const double& b)
+bool equal(const double& a, const double& b)
 {
     if (std::abs(a - b) < 0.0000001) return true;
     return false;
