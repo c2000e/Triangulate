@@ -7,7 +7,7 @@
 template<>
 void draw(const Mesh& m, SDL_Renderer* renderer)
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0,255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     for (const Vertex& v : m.vertices)
     {
         SDL_RenderDrawPoint(renderer, v.position.x, v.position.y);
@@ -18,6 +18,22 @@ void draw(const Mesh& m, SDL_Renderer* renderer)
             e.origin->position.y, e.twin->origin->position.x,
             e.twin->origin->position.y);
     }
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    for (const Face& f : m.faces)
+    {
+        HalfEdge* s = f.edge;
+        SDL_RenderDrawLine(renderer, s->origin->position.x,
+            s->origin->position.y, s->twin->origin->position.x,
+            s->twin->origin->position.y);
+        HalfEdge* e = s->next;
+        while (*e != *s)
+        {
+            SDL_RenderDrawLine(renderer, e->origin->position.x,
+                e->origin->position.y, e->twin->origin->position.x,
+                e->twin->origin->position.y);
+            e = e->next;
+        }
+    }  
 }
 
 int main(int argc, char* arv[])
@@ -75,6 +91,7 @@ int main(int argc, char* arv[])
                         if (addEdges)
                         {
                             m.addEdge(lastX, lastY, firstX, firstY);
+                            m.createFaces();
                             addEdges = false;
                             redraw = true;
                         }
