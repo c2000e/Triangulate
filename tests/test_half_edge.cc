@@ -4,25 +4,25 @@
 
 TEST(test_half_edge, sortEdgesCW)
 {
-    Vertex center(-137.0, 53.0);
+    Vertex center(-137, 53);
 
     std::vector<Vertex> vertices;
-    vertices.push_back(Vertex( 0.0 + center.position.x,
-         1.0 + center.position.y));
-    vertices.push_back(Vertex( 1.0 + center.position.x,
-         1.0 + center.position.y));
-    vertices.push_back(Vertex( 1.0 + center.position.x,
-         0.0 + center.position.y));
-    vertices.push_back(Vertex( 1.0 + center.position.x,
-        -1.0 + center.position.y));
-    vertices.push_back(Vertex( 0.0 + center.position.x,
-        -1.0 + center.position.y));
-    vertices.push_back(Vertex(-1.0 + center.position.x,
-        -1.0 + center.position.y));
-    vertices.push_back(Vertex(-1.0 + center.position.x,
-         0.0 + center.position.y));
-    vertices.push_back(Vertex(-1.0 + center.position.x,
-         1.0 + center.position.y));
+    vertices.push_back(Vertex( 0 + center.position.x,
+         1 + center.position.y));
+    vertices.push_back(Vertex( 1 + center.position.x,
+         1 + center.position.y));
+    vertices.push_back(Vertex( 1 + center.position.x,
+         0 + center.position.y));
+    vertices.push_back(Vertex( 1 + center.position.x,
+        -1 + center.position.y));
+    vertices.push_back(Vertex( 0 + center.position.x,
+        -1 + center.position.y));
+    vertices.push_back(Vertex(-1 + center.position.x,
+        -1 + center.position.y));
+    vertices.push_back(Vertex(-1 + center.position.x,
+         0 + center.position.y));
+    vertices.push_back(Vertex(-1 + center.position.x,
+         1 + center.position.y));
 
     std::vector<HalfEdge> edges;
     for (int i = 0; i < vertices.size(); i++)
@@ -63,3 +63,4 @@ TEST(test_half_edge, sortEdgesCW)
         ASSERT_EQ(edgePointers[i], shuffledEdgePointers[i / 2]);
     }
 }
+

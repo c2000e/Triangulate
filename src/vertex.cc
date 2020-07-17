@@ -2,7 +2,7 @@
 
 #include <iomanip>
 
-Vertex::Vertex(double x, double y) : position(x, y), edge(nullptr) {}
+Vertex::Vertex(int x, int y) : position(x, y), edge(nullptr) {}
 
 bool operator==(const Vertex& a, const Vertex& b)
 {

@@ -42,7 +42,7 @@ void Mesh::mergeEdge(Vertex* v, HalfEdge* e) const
     v->edge = v_edges[0];
 }
 
-Vertex* Mesh::addVertex(double x, double y)
+Vertex* Mesh::addVertex(int x, int y)
 {
     Vertex v(x, y);
 
@@ -56,7 +56,7 @@ Vertex* Mesh::addVertex(double x, double y)
     return &vertices.back();
 }
 
-HalfEdge* Mesh::addEdge(double x1, double y1, double x2, double y2)
+HalfEdge* Mesh::addEdge(int x1, int y1, int x2, int y2)
 {
     Vertex* v1 = addVertex(x1, y1);
     Vertex* v2 = addVertex(x2, y2);

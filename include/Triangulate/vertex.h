@@ -10,7 +10,7 @@ struct Vertex
     Vector position;
     HalfEdge* edge;
 
-    Vertex(double x, double y);
+    Vertex(int x, int y);
 };
 
 bool operator==(const Vertex& a, const Vertex& b);

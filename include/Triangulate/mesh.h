@@ -16,8 +16,8 @@ class Mesh
         void mergeEdge(Vertex* v, HalfEdge* e) const;
 
     public:
-        Vertex* addVertex(double x, double y);
-        HalfEdge* addEdge(double x1, double y1, double x2, double y2);
+        Vertex* addVertex(int x, int y);
+        HalfEdge* addEdge(int x1, int y1, int x2, int y2);
         void createFaces();
 
         friend std::ostream& operator<<(std::ostream& os, const Mesh& m);
