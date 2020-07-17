@@ -9,7 +9,6 @@ struct HalfEdge;
 struct Face
 {
     HalfEdge* edge;
-    std::vector<HalfEdge*> holes;
 
     Face();
 };

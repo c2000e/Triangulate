@@ -27,9 +27,5 @@ std::ostream& operator<<(std::ostream& os, const Face& f)
 {
     os << &f << std::endl;
     os << "\tedge: " << f.edge << " " << f.edge->origin->position << std::endl;
-    for (const HalfEdge* e : f.holes)
-    {
-        os << "\thole: " << e << e->origin->position << std::endl;
-    }
     return os;
 }

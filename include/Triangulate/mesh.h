@@ -1,7 +1,7 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "Triangulate/cycle.h"
+#include "Triangulate/half_edge.h"
 
 #include <list>
 
@@ -14,8 +14,6 @@ class Mesh
 
         std::vector<HalfEdge*> findEdges(const Vertex* v) const;
         void mergeEdge(Vertex* v, HalfEdge* e) const;
-
-        std::vector<Cycle> findCycles();
 
     public:
         Vertex* addVertex(double x, double y);

@@ -1,5 +1,4 @@
-add_library(TriangulateLib STATIC cycle.cc 
-                                  face.cc
+add_library(TriangulateLib STATIC face.cc
                                   half_edge.cc
                                   mesh.cc
                                   vector.cc
