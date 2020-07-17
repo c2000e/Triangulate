@@ -2,7 +2,7 @@
 
 #include "Triangulate/half_edge.h"
 
-TEST(test_half_edge, sortEdgesCW)
+TEST(test_half_edge, sortClockwise)
 {
     Vertex center(-137, 53);
 
@@ -56,7 +56,7 @@ TEST(test_half_edge, sortEdgesCW)
     shuffledEdgePointers.push_back(edgePointers[4]);
     shuffledEdgePointers.push_back(edgePointers[12]);
 
-    sortEdgesCW(shuffledEdgePointers, &center);
+    sortClockwise(shuffledEdgePointers, &center);
 
     for (int i = 0; i < edgePointers.size(); i += 2)
     {

@@ -15,12 +15,12 @@ struct HalfEdge
     HalfEdge();
 };
 
-void sortEdgesCW(std::vector<HalfEdge*>& edges, const Vertex* center);
-
 bool operator==(const HalfEdge& a, const HalfEdge& b);
 bool operator!=(const HalfEdge& a, const HalfEdge& b);
 
 std::ostream& operator<<(std::ostream& os, const HalfEdge& e);
+
+void sortClockwise(std::vector<HalfEdge*>& edges, const Vertex* center);
 
 const HalfEdge* lowerLeft(const HalfEdge* e);
 bool interior(const HalfEdge* e);

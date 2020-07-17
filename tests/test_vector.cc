@@ -140,7 +140,7 @@ TEST(test_vector, det)
     ASSERT_EQ(det(b, a), -2);
 }
 
-TEST(test_vector, cwLess)
+TEST(test_vector, clockwise)
 {
     Vector center(4, -16);
 
@@ -158,8 +158,8 @@ TEST(test_vector, cwLess)
     {
         for (int j = i + 1; j < vectors.size(); j++)
         {
-            ASSERT_TRUE(cwLess(vectors[i], vectors[j], center));
-            ASSERT_FALSE(cwLess(vectors[j], vectors[i], center));
+            ASSERT_TRUE(clockwise(vectors[i], vectors[j], center));
+            ASSERT_FALSE(clockwise(vectors[j], vectors[i], center));
         }
     }
 }

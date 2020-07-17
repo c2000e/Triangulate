@@ -5,14 +5,6 @@
 HalfEdge::HalfEdge() : origin(nullptr), twin(nullptr), next(nullptr),
     prev(nullptr), face(nullptr) {}
 
-void sortEdgesCW(std::vector<HalfEdge*>& edges, const Vertex* center)
-{
-    std::sort(edges.begin(), edges.end(),
-        [center](const HalfEdge* a, const HalfEdge* b)
-        { return cwLess(a->twin->origin->position, b->twin->origin->position,
-              center->position); });
-}
-
 bool operator==(const HalfEdge& a, const HalfEdge& b)
 {
     return *a.origin == *b.origin && *a.twin->origin == *b.twin->origin;
@@ -31,6 +23,14 @@ std::ostream& operator<<(std::ostream& os, const HalfEdge& e)
     os << "\tprev: " << e.prev << " " << e.prev->origin->position << std::endl;
     os << "\tface: " << e.face << std::endl;
     return os;
+}
+
+void sortClockwise(std::vector<HalfEdge*>& edges, const Vertex* center)
+{
+    std::sort(edges.begin(), edges.end(),
+        [center](const HalfEdge* a, const HalfEdge* b)
+        { return clockwise(a->twin->origin->position, b->twin->origin->position,
+              center->position); });
 }
 
 const HalfEdge* lowerLeft(const HalfEdge* s)

@@ -28,6 +28,6 @@ bool operator!=(const Vector& a, const Vector& b);
 
 std::ostream& operator<<(std::ostream& os, const Vector& v);
 
-bool cwLess(const Vector& a, const Vector& b, const Vector& c);
+bool clockwise(const Vector& a, const Vector& b, const Vector& c);
 
 #endif

@@ -68,7 +68,7 @@ std::ostream& operator<<(std::ostream& os, const Vector& v)
     return os;
 }
 
-bool cwLess(const Vector& a, const Vector& b, const Vector& c)
+bool clockwise(const Vector& a, const Vector& b, const Vector& c)
 {
     Vector u = a - c;
     Vector v = b - c;

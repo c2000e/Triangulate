@@ -25,7 +25,7 @@ void Mesh::mergeEdge(Vertex* v, HalfEdge* e) const
     v_edges.push_back(e);
     if (v_edges.size() > 1)
     {
-        sortEdgesCW(v_edges, v);
+        sortClockwise(v_edges, v);
         for (int i = 0; i < v_edges.size() - 1; i++)
         {
             v_edges[i]->twin->next = v_edges[i + 1];
