@@ -45,6 +45,13 @@ int det(const Vector& a, const Vector& b)
     return a.x * b.y - a.y * b.x;
 }
 
+double angle(const Vector& a, const Vector& b)
+{
+    double t = std::atan2(det(a, b), dot(a, b));
+    if (t < 0) t += 2 * 3.14159265359;
+    return t;
+}
+
 bool operator==(const Vector& a, const Vector& b)
 {
     return a.x == b.x && a.y == b.y;

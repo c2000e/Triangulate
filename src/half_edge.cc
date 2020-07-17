@@ -32,3 +32,34 @@ std::ostream& operator<<(std::ostream& os, const HalfEdge& e)
     os << "\tface: " << e.face << std::endl;
     return os;
 }
+
+const HalfEdge* lowerLeft(const HalfEdge* s)
+{ 
+    const HalfEdge* m = s;
+    const HalfEdge* e = s->next;
+    while (*e != *s)
+    { 
+        if (e->origin->position.x < m->origin->position.x)
+        {
+            m = e;
+        }
+        else if (e->origin->position.x == m->origin->position.x)
+        {
+            if (e->origin->position.y < m->origin->position.y)
+            {
+                m = e;
+            }
+        }
+        e = e->next;
+    }
+    return m;
+}
+
+bool interior(const HalfEdge* e)
+{
+    e = lowerLeft(e);
+    if (angle(e->prev->origin->position - e->origin->position,
+            e->next->origin->position - e->origin->position)
+            > 3.14159265359) return true;
+    return false;
+}

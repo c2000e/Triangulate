@@ -22,4 +22,7 @@ bool operator!=(const HalfEdge& a, const HalfEdge& b);
 
 std::ostream& operator<<(std::ostream& os, const HalfEdge& e);
 
+const HalfEdge* lowerLeft(const HalfEdge* e);
+bool interior(const HalfEdge* e);
+
 #endif

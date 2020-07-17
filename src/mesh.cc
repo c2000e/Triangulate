@@ -102,6 +102,7 @@ void Mesh::createFaces()
     for (HalfEdge& s : edges)
     {
         if (s.face) continue;
+        if (!interior(&s)) continue;
 
         faces.push_back(Face());
         faces.back().edge = &s;

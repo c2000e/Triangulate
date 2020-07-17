@@ -21,6 +21,7 @@ struct Vector
 
 int dot(const Vector& a, const Vector& b);
 int det(const Vector& a, const Vector& b);
+double angle(const Vector& a, const Vector& b);
 
 bool operator==(const Vector& a, const Vector& b);
 bool operator!=(const Vector& a, const Vector& b);
