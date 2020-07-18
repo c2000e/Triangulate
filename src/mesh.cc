@@ -28,11 +28,8 @@ HalfEdge* Mesh::addEdge(int x1, int y1, int x2, int y2)
         return NULL;
     }
 
-    HalfEdge e1;
-    e1.origin = v1;
-
-    HalfEdge e2;
-    e2.origin = v2;
+    HalfEdge e1(v1);
+    HalfEdge e2(v2);
 
     e1.twin = &e2;
     e2.twin = &e1;

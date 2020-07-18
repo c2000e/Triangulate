@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-HalfEdge::HalfEdge() : origin(nullptr), twin(nullptr), next(nullptr),
-    prev(nullptr), face(nullptr) {}
+HalfEdge::HalfEdge(Vertex* origin) : origin(origin), twin(nullptr),
+    next(nullptr), prev(nullptr), face(nullptr) {}
 
 bool operator==(const HalfEdge& a, const HalfEdge& b)
 {

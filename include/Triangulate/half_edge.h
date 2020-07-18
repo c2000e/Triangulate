@@ -12,7 +12,7 @@ struct HalfEdge
     HalfEdge* prev;
     Face* face;
 
-    HalfEdge();
+    HalfEdge(Vertex* origin);
 };
 
 bool operator==(const HalfEdge& a, const HalfEdge& b);
