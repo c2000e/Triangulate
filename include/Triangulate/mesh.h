@@ -12,9 +12,6 @@ class Mesh
         std::list<HalfEdge> edges;
         std::list<Face> faces;
 
-        std::vector<HalfEdge*> findEdges(const Vertex* v) const;
-        void mergeEdge(Vertex* v, HalfEdge* e) const;
-
     public:
         Vertex* addVertex(int x, int y);
         HalfEdge* addEdge(int x1, int y1, int x2, int y2);

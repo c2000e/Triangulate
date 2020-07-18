@@ -3,6 +3,8 @@
 
 #include "Triangulate/vector.h"
 
+#include <vector>
+
 struct HalfEdge;
 
 struct Vertex
@@ -11,6 +13,9 @@ struct Vertex
     HalfEdge* edge;
 
     Vertex(int x, int y);
+
+    std::vector<HalfEdge*> edges() const;
+    void mergeEdge(HalfEdge* e);
 };
 
 bool operator==(const Vertex& a, const Vertex& b);

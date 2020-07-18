@@ -3,45 +3,6 @@
 #include <algorithm>
 #include <iterator>
 
-std::vector<HalfEdge*> Mesh::findEdges(const Vertex* v) const
-{
-    std::vector<HalfEdge*> v_edges; 
-    if (v->edge)
-    {
-        v_edges.push_back(v->edge);
-        HalfEdge* e = v->edge->twin->next;
-        while (e != v->edge)
-        {
-            v_edges.push_back(e);
-            e = e->twin->next;
-        }
-    }
-    return v_edges;
-}
-
-void Mesh::mergeEdge(Vertex* v, HalfEdge* e) const
-{
-    std::vector<HalfEdge*> v_edges = findEdges(v);
-    v_edges.push_back(e);
-    if (v_edges.size() > 1)
-    {
-        sortClockwise(v_edges, v);
-        for (int i = 0; i < v_edges.size() - 1; i++)
-        {
-            v_edges[i]->twin->next = v_edges[i + 1];
-            v_edges[i + 1]->prev = v_edges[i]->twin;
-        }
-        v_edges[v_edges.size() - 1]->twin->next = v_edges[0];
-        v_edges[0]->prev = v_edges[v_edges.size() - 1]->twin;
-    }
-    else
-    {
-        e->twin->next = e;
-        e->prev = e->twin;
-    }
-    v->edge = v_edges[0];
-}
-
 Vertex* Mesh::addVertex(int x, int y)
 {
     Vertex v(x, y);
@@ -91,8 +52,8 @@ HalfEdge* Mesh::addEdge(int x1, int y1, int x2, int y2)
     ep2->twin = ep1;
 
     // adjust edge flow at affected vertices
-    mergeEdge(v1, ep1);
-    mergeEdge(v2, ep2);
+    v1->mergeEdge(ep1);
+    v2->mergeEdge(ep2);
 
     return ep1;
 }
