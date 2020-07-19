@@ -5,6 +5,37 @@
 HalfEdge::HalfEdge(Vertex* origin) : origin(origin), twin(nullptr),
     next(nullptr), prev(nullptr), face(nullptr) {}
 
+const HalfEdge* HalfEdge::leftmost() const
+{ 
+    const HalfEdge* m = this;
+    const HalfEdge* e = this->next;
+    while (*e != *this)
+    { 
+        if (e->origin->position.x < m->origin->position.x)
+        {
+            m = e;
+        }
+        else if (e->origin->position.x == m->origin->position.x)
+        {
+            if (e->origin->position.y < m->origin->position.y)
+            {
+                m = e;
+            }
+        }
+        e = e->next;
+    }
+    return m;
+}
+
+bool HalfEdge::interior() const
+{
+    const HalfEdge* e = this->leftmost();
+    if (angle(e->prev->origin->position - e->origin->position,
+            e->next->origin->position - e->origin->position)
+            > 3.14159265359) return true;
+    return false;
+}
+
 bool operator==(const HalfEdge& a, const HalfEdge& b)
 {
     return *a.origin == *b.origin && *a.twin->origin == *b.twin->origin;
@@ -33,33 +64,3 @@ void sortClockwise(std::vector<HalfEdge*>& edges, const Vertex* center)
               center->position); });
 }
 
-const HalfEdge* lowerLeft(const HalfEdge* s)
-{ 
-    const HalfEdge* m = s;
-    const HalfEdge* e = s->next;
-    while (*e != *s)
-    { 
-        if (e->origin->position.x < m->origin->position.x)
-        {
-            m = e;
-        }
-        else if (e->origin->position.x == m->origin->position.x)
-        {
-            if (e->origin->position.y < m->origin->position.y)
-            {
-                m = e;
-            }
-        }
-        e = e->next;
-    }
-    return m;
-}
-
-bool interior(const HalfEdge* e)
-{
-    e = lowerLeft(e);
-    if (angle(e->prev->origin->position - e->origin->position,
-            e->next->origin->position - e->origin->position)
-            > 3.14159265359) return true;
-    return false;
-}
