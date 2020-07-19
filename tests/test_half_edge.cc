@@ -2,6 +2,37 @@
 
 #include "Triangulate/half_edge.h"
 
+#include "Triangulate/mesh.h"
+
+TEST(test_half_edge, leftmost)
+{
+    Mesh m;
+
+    HalfEdge* e1 = m.addEdge(1, 1, 0, 0);
+    HalfEdge* e2 = m.addEdge(0, 0, 0, 1);
+    HalfEdge* e3 = m.addEdge(0, 1, 1, 1);
+
+    ASSERT_EQ(e1->leftmost(), e2);
+    ASSERT_EQ(e2->leftmost(), e2);
+    ASSERT_EQ(e3->leftmost(), e2);
+}
+
+TEST(test_half_edge, interior)
+{
+    Mesh m;
+
+    HalfEdge* e1 = m.addEdge(1, 1, 0, 0);
+    HalfEdge* e2 = m.addEdge(0, 0, 0, 1);
+    HalfEdge* e3 = m.addEdge(0, 1, 1, 1);
+
+    ASSERT_FALSE(e1->interior());
+    ASSERT_FALSE(e2->interior());
+    ASSERT_FALSE(e3->interior());
+    ASSERT_TRUE(e1->twin->interior());
+    ASSERT_TRUE(e2->twin->interior());
+    ASSERT_TRUE(e3->twin->interior());
+}
+
 TEST(test_half_edge, sortClockwise)
 {
     Vertex center(-137, 53);
