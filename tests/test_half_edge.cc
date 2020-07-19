@@ -27,10 +27,8 @@ TEST(test_half_edge, sortClockwise)
     std::vector<HalfEdge> edges;
     for (int i = 0; i < vertices.size(); i++)
     {
-        HalfEdge e;
-        e.origin = &center;
-        HalfEdge t;
-        t.origin = &vertices[i];
+        HalfEdge e(&center);
+        HalfEdge t(&vertices[i]);
         edges.push_back(e);
         edges.push_back(t);
     }
