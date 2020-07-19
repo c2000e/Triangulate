@@ -7,7 +7,8 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(TestTriangulateLib test_half_edge.cc 
                                   test_mesh.cc
-                                  test_vector.cc)
+                                  test_vector.cc
+                                  test_vertex.cc)
 
 target_compile_features(TestTriangulateLib PRIVATE cxx_std_11)
 target_link_libraries(TestTriangulateLib PRIVATE TriangulateLib gtest
