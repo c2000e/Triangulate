@@ -1,6 +1,8 @@
 #ifndef HALF_EDGE_H
 #define HALF_EDGE_H
 
+#include "Triangulate/half_edge_iterator.h"
+
 #include "Triangulate/face.h"
 #include "Triangulate/vertex.h"
 
@@ -14,7 +16,12 @@ struct HalfEdge
 
     HalfEdge(Vertex* origin);
 
+    using iterator = HalfEdgeIterator;
+    iterator begin();
+    iterator end();
+
     const HalfEdge* leftmost() const;
+
     bool interior() const;
 };
 

@@ -5,6 +5,16 @@
 HalfEdge::HalfEdge(Vertex* origin) : origin(origin), twin(nullptr),
     next(nullptr), prev(nullptr), face(nullptr) {}
 
+HalfEdge::iterator HalfEdge::begin()
+{
+    return { this };
+}
+
+HalfEdge::iterator HalfEdge::end()
+{
+    return { this, true };
+}
+
 const HalfEdge* HalfEdge::leftmost() const
 { 
     const HalfEdge* m = this;
