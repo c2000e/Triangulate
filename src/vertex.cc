@@ -4,7 +4,7 @@
 
 #include <iomanip>
 
-Vertex::Vertex(int x, int y) : position(x, y), edge(nullptr) {}
+Vertex::Vertex(int x, int y) : Vector(x, y), edge(nullptr) {}
 
 std::vector<HalfEdge*> Vertex::edges() const
 {
@@ -47,7 +47,7 @@ void Vertex::mergeEdge(HalfEdge* e)
 
 bool operator==(const Vertex& a, const Vertex& b)
 {
-    return a.position == b.position;
+    return (Vector) a == (Vector) b;
 }
 
 bool operator!=(const Vertex& a, const Vertex& b)
@@ -57,6 +57,7 @@ bool operator!=(const Vertex& a, const Vertex& b)
 
 std::ostream& operator<<(std::ostream& os, const Vertex& v)
 {
-    os << &v << " " << v.position;
+    os << &v << " " << (Vector) v;
     return os;
 }
+

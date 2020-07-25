@@ -4,17 +4,17 @@
 
 using iterator = HalfEdgeIterator;
 
-iterator::HalfEdgeIterator(iterator::pointer edge, bool end)
+iterator::HalfEdgeIterator(iterator::value_type edge, bool end)
     : edge(end ? nullptr : edge), start(edge) {}
 
 iterator::reference iterator::operator*()
 {
-    return *edge;
+    return edge;
 }
 
 iterator::pointer iterator::operator->()
 {
-    return edge;
+    return &edge;
 }
 
 iterator& iterator::operator++()

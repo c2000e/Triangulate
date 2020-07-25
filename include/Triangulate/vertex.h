@@ -7,10 +7,10 @@
 
 struct HalfEdge;
 
-struct Vertex
+struct Vertex : Vector
 {
-    Vector position;
     HalfEdge* edge;
+    bool merge;
 
     Vertex(int x, int y);
 

@@ -140,6 +140,96 @@ TEST(test_vector, det)
     ASSERT_EQ(det(b, a), -2);
 }
 
+TEST(test_vector, above)
+{
+    Vector a(0, 0);
+    Vector b(1, 0);
+    Vector c(1, 1);
+    ASSERT_TRUE(above(a, b));
+    ASSERT_FALSE(above(a, c));
+    ASSERT_FALSE(above(b, a));
+    ASSERT_FALSE(above(b, c));
+    ASSERT_TRUE(above(c, a));
+    ASSERT_TRUE(above(c, b));
+}
+
+TEST(test_vector, below)
+{
+    Vector a(0, 0);
+    Vector b(1, 0);
+    Vector c(1, 1);
+    ASSERT_FALSE(below(a, b));
+    ASSERT_TRUE(below(a, c));
+    ASSERT_TRUE(below(b, a));
+    ASSERT_TRUE(below(b, c));
+    ASSERT_FALSE(below(c, a));
+    ASSERT_FALSE(below(c, b));
+}
+
+TEST(test_vector, left)
+{
+    Vector a(0, 0);
+    Vector b(1, 1);
+    Vector c(5, 0);
+    Vector d(0, 5);
+    ASSERT_FALSE(left(a, b, c));
+    ASSERT_TRUE(left(a, b, d));
+}
+
+TEST(test_vector, right)
+{
+    Vector a(0, 0);
+    Vector b(1, 1);
+    Vector c(5, 0);
+    Vector d(0, 5);
+    ASSERT_TRUE(right(a, b, c));
+    ASSERT_FALSE(right(a, b, d));
+}
+
+TEST(test_vector, betweenX)
+{
+    Vector a(0, 0);
+    Vector b(2, 2);
+    Vector c(1, 1);
+    Vector d(1, -1);
+    Vector e(-1, 1);
+    ASSERT_TRUE(betweenX(a, b, c));
+    ASSERT_TRUE(betweenX(a, b, d));
+    ASSERT_FALSE(betweenX(a, b, e));
+}
+
+TEST(test_vector, betweenY)
+{
+    Vector a(0, 0);
+    Vector b(2, 2);
+    Vector c(1, 1);
+    Vector d(1, -1);
+    Vector e(-1, 1);
+    ASSERT_TRUE(betweenY(a, b, c));
+    ASSERT_FALSE(betweenY(a, b, d));
+    ASSERT_TRUE(betweenY(a, b, e));
+}
+
+TEST(test_vector, rayHitLeft)
+{
+    Vector a(0, 0);
+    Vector b(2, 2);
+    Vector c(2, 1);
+    Vector d(0, 1);
+    ASSERT_TRUE(rayHitLeft(a, b, c));
+    ASSERT_FALSE(rayHitLeft(a, b, d));
+}
+
+TEST(test_vector, rayHitRight)
+{
+    Vector a(0, 0);
+    Vector b(2, 2);
+    Vector c(2, 1);
+    Vector d(0, 1);
+    ASSERT_FALSE(rayHitRight(a, b, c));
+    ASSERT_TRUE(rayHitRight(a, b, d));
+}
+
 TEST(test_vector, clockwise)
 {
     Vector center(4, -16);
@@ -162,5 +252,25 @@ TEST(test_vector, clockwise)
             ASSERT_FALSE(clockwise(vectors[j], vectors[i], center));
         }
     }
+}
+
+TEST(test_vector, intersectX)
+{
+    Vector a(0, 0);
+    Vector b(2, 2);
+    Vector c(2, 1);
+    Vector d(0, 1);
+    ASSERT_DOUBLE_EQ(intersectX(a, b, c), 1.0);
+    ASSERT_DOUBLE_EQ(intersectX(a, b, c), 1.0);
+}
+
+TEST(test_vector, intersectY)
+{
+    Vector a(0, 0);
+    Vector b(2, 2);
+    Vector c(1, 2);
+    Vector d(1, 0);
+    ASSERT_DOUBLE_EQ(intersectY(a, b, c), 1.0);
+    ASSERT_DOUBLE_EQ(intersectY(a, b, d), 1.0);
 }
 

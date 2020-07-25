@@ -1,5 +1,7 @@
 #include "Triangulate/mesh.h"
 
+#include "Triangulate/triangulate.h"
+
 #include <algorithm>
 #include <iterator>
 
@@ -22,6 +24,11 @@ HalfEdge* Mesh::addEdge(int x1, int y1, int x2, int y2)
     Vertex* v1 = addVertex(x1, y1);
     Vertex* v2 = addVertex(x2, y2);
 
+    return addEdge(v1, v2);
+}
+
+HalfEdge* Mesh::addEdge(Vertex* v1, Vertex* v2)
+{
     // don't allow single edge cycles
     if (*v1 == *v2)
     {
@@ -61,7 +68,6 @@ void Mesh::createFaces()
     {
         if (s.face) continue;
         if (!s.interior()) continue;
-
         faces.push_back(Face());
         faces.back().edge = &s;
         s.face = &faces.back();
@@ -71,6 +77,14 @@ void Mesh::createFaces()
             e->face = &faces.back();
             e = e->next;
         }
+    }
+}
+
+void Mesh::triangulate()
+{
+    for (Face& f : faces)
+    {
+        makeMonotone(&f, *this);
     }
 }
 

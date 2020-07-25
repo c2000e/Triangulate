@@ -64,10 +64,65 @@ bool operator!=(const Vector& a, const Vector& b)
 
 std::ostream& operator<<(std::ostream& os, const Vector& v)
 {
-    os << "(" << v.x << ", " << v.y << ")" << std::endl;
+    os << "(" << v.x << ", " << v.y << ")";
     return os;
 }
 
+// is (a) above (b)?
+bool above(const Vector& a, const Vector& b)
+{
+    return a.y > b.y || (a.y == b.y && a.x < b.x);
+}
+
+// is (a) below (b)?
+bool below(const Vector& a, const Vector& b)
+{
+    return a.y < b.y || (a.y == b.y && a.x > b.x);
+}
+
+// does a point (c) lie to the left of a line (a, b)?
+bool left(const Vector& a, const Vector& b, const Vector& c)
+{
+    if (a.y < b.y) return det(b - a, c - a) > 0;
+    return det(a - b, c - b) > 0;
+}
+
+// does a point (c) lie to the right of a line (a, b)?
+bool right(const Vector& a, const Vector& b, const Vector& c)
+{
+    if (a.y < b.y) return det(b - a, c - a) < 0;
+    return det(a - b, c - b) < 0;
+}
+
+// does (c) lie between (a) and (b) on the x-axis?
+bool betweenX(const Vector& a, const Vector& b, const Vector& c)
+{
+    if (a.x < c.x != b.x < c.x) return true;
+    return false;
+}
+
+// does (c) lie between (a) and (b) on the x-axis?
+bool betweenY(const Vector& a, const Vector& b, const Vector& c)
+{
+    if (a.y < c.y != b.y < c.y) return true;
+    return false;
+}
+
+// does a ray from (c) heading left hit the line segment (a, b)?
+bool rayHitLeft(const Vector& a, const Vector& b, const Vector& c)
+{
+    if (betweenY(a, b, c) && right(a, b, c)) return true;
+    return false;
+}
+
+// does a ray from (c) heading right hit the line segment (a, b)?
+bool rayHitRight(const Vector& a, const Vector& b, const Vector& c)
+{
+    if (betweenY(a, b, c) && left(a, b, c)) return true;
+    return false;
+}
+
+// is the shortest route from (a) to (b) around (c) clockwise?
 bool clockwise(const Vector& a, const Vector& b, const Vector& c)
 {
     Vector u = a - c;
@@ -86,3 +141,20 @@ bool clockwise(const Vector& a, const Vector& b, const Vector& c)
     if (d > 0) return false;
     return u.sqrMagnitude() > v.sqrMagnitude();
 }
+
+// the x coordinate where a horizontal ray from (c) hits the line segment
+// (a, b). assumes an intersection does exist.
+double intersectX(const Vector& a, const Vector& b, const Vector &c)
+{
+    if (a.y == b.y) return a.x;
+    return (b.x - a.x) / (b.y - a.y) * c.y + a.x; 
+}
+
+// the y coordinate where a vertical ray from (c) hits the line segment
+// (a, b). assumes an intersection does exist.
+double intersectY(const Vector& a, const Vector& b, const Vector& c)
+{
+    if (a.x == b.y) return a.y;
+    return (b.y - a.y) / (b.x - a.x) * c.x + a.y;
+}
+

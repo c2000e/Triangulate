@@ -4,6 +4,33 @@
 
 #include "Triangulate/mesh.h"
 
+TEST(test_half_edge, leftNeighbor)
+{
+    Mesh m;
+
+    HalfEdge* e1 = m.addEdge(0, 0, 3, 3);
+    HalfEdge* e2 = m.addEdge(3, 3, 3, 5);
+    HalfEdge* e3 = m.addEdge(3, 5, 6, 4);
+    HalfEdge* e4 = m.addEdge(6, 4, 6, 2);
+    HalfEdge* e5 = m.addEdge(6, 2, 9, 1);
+    HalfEdge* e6 = m.addEdge(9, 1, 9, 3);
+    HalfEdge* e7 = m.addEdge(9, 3, 6, 6);
+    HalfEdge* e8 = m.addEdge(6, 6, 3, 7);
+    HalfEdge* e9 = m.addEdge(3, 7, 0, 4);
+    HalfEdge* e10 = m.addEdge(0, 4, 0, 0);
+    
+    ASSERT_FALSE(e1->leftNeighbor());
+    ASSERT_EQ(e2->leftNeighbor(), e10);
+    ASSERT_EQ(e3->leftNeighbor(), e9);
+    ASSERT_EQ(e4->leftNeighbor(), e2);
+    ASSERT_EQ(e5->leftNeighbor(), e1);
+    ASSERT_EQ(e6->leftNeighbor(), e1);
+    ASSERT_EQ(e7->leftNeighbor(), e4);
+    ASSERT_EQ(e8->leftNeighbor(), e9);
+    ASSERT_FALSE(e9->leftNeighbor());
+    ASSERT_FALSE(e10->leftNeighbor());
+}
+
 TEST(test_half_edge, leftmost)
 {
     Mesh m;
@@ -38,22 +65,14 @@ TEST(test_half_edge, sortClockwise)
     Vertex center(-137, 53);
 
     std::vector<Vertex> vertices;
-    vertices.push_back(Vertex( 0 + center.position.x,
-         1 + center.position.y));
-    vertices.push_back(Vertex( 1 + center.position.x,
-         1 + center.position.y));
-    vertices.push_back(Vertex( 1 + center.position.x,
-         0 + center.position.y));
-    vertices.push_back(Vertex( 1 + center.position.x,
-        -1 + center.position.y));
-    vertices.push_back(Vertex( 0 + center.position.x,
-        -1 + center.position.y));
-    vertices.push_back(Vertex(-1 + center.position.x,
-        -1 + center.position.y));
-    vertices.push_back(Vertex(-1 + center.position.x,
-         0 + center.position.y));
-    vertices.push_back(Vertex(-1 + center.position.x,
-         1 + center.position.y));
+    vertices.push_back(Vertex( 0 + center.x, 1 + center.y));
+    vertices.push_back(Vertex( 1 + center.x, 1 + center.y));
+    vertices.push_back(Vertex( 1 + center.x, 0 + center.y));
+    vertices.push_back(Vertex( 1 + center.x, -1 + center.y));
+    vertices.push_back(Vertex( 0 + center.x, -1 + center.y));
+    vertices.push_back(Vertex(-1 + center.x, -1 + center.y));
+    vertices.push_back(Vertex(-1 + center.x, 0 + center.y));
+    vertices.push_back(Vertex(-1 + center.x, 1 + center.y));
 
     std::vector<HalfEdge> edges;
     for (int i = 0; i < vertices.size(); i++)

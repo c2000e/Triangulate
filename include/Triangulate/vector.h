@@ -28,6 +28,17 @@ bool operator!=(const Vector& a, const Vector& b);
 
 std::ostream& operator<<(std::ostream& os, const Vector& v);
 
+bool above(const Vector& a, const Vector& b);
+bool below(const Vector& a, const Vector& b);
+bool left(const Vector& a, const Vector& b, const Vector& c);
+bool right(const Vector& a, const Vector& b, const Vector& c);
+bool betweenX(const Vector& a, const Vector& b, const Vector& c);
+bool betweenY(const Vector& a, const Vector& b, const Vector& c);
+bool rayHitLeft(const Vector& a, const Vector& b, const Vector& c);
+bool rayHitRight(const Vector& a, const Vector& b, const Vector& c);
 bool clockwise(const Vector& a, const Vector& b, const Vector& c);
+
+double intersectX(const Vector& a, const Vector& b, const Vector& c);
+double intersectY(const Vector& a, const Vector& b, const Vector& c);
 
 #endif

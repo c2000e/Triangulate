@@ -8,13 +8,13 @@ struct HalfEdge;
 class HalfEdgeIterator
 {
     public:
-        using value_type = HalfEdge;
-        using reference = HalfEdge&;
-        using pointer = HalfEdge*;
+        using value_type = HalfEdge*;
+        using reference = value_type&;
+        using pointer = value_type*;
         using iterator_category = std::bidirectional_iterator_tag;
         using difference_type = std::ptrdiff_t;
         
-        HalfEdgeIterator(pointer edge, bool end = false);
+        HalfEdgeIterator(value_type edge, bool end = false);
 
         reference operator*();
         pointer operator->();
@@ -28,8 +28,8 @@ class HalfEdgeIterator
         bool operator!=(const HalfEdgeIterator &other) const;
 
     private:
-        pointer edge;
-        pointer start;
+        value_type edge;
+        value_type start;
 };
 
 #endif

@@ -6,6 +6,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(TestTriangulateLib test_half_edge.cc 
+                                  test_half_edge_iterator.cc
                                   test_mesh.cc
                                   test_vector.cc
                                   test_vertex.cc)

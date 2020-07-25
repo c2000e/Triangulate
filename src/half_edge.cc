@@ -1,9 +1,11 @@
 #include "Triangulate/half_edge.h"
 
 #include <algorithm>
+#include <cmath>
+#include <iterator>
 
 HalfEdge::HalfEdge(Vertex* origin) : origin(origin), twin(nullptr),
-    next(nullptr), prev(nullptr), face(nullptr) {}
+    next(nullptr), prev(nullptr), face(nullptr), helper(nullptr) {}
 
 HalfEdge::iterator HalfEdge::begin()
 {
@@ -15,35 +17,34 @@ HalfEdge::iterator HalfEdge::end()
     return { this, true };
 }
 
-const HalfEdge* HalfEdge::leftmost() const
-{ 
-    const HalfEdge* m = this;
-    const HalfEdge* e = this->next;
-    while (*e != *this)
-    { 
-        if (e->origin->position.x < m->origin->position.x)
+HalfEdge* HalfEdge::leftmost()
+{
+    return ::leftmost<HalfEdge::iterator>(this->begin(), this->end());
+}
+
+bool HalfEdge::interior()
+{
+    HalfEdge* e = this->leftmost();
+    if (angle(*e->next->origin - *e->origin, *e->prev->origin - *e->origin)
+            < 3.14159265359) return true;
+    return false;
+}
+
+bool HalfEdge::left()
+{
+    int num_intersections = 0;
+    HalfEdge* e = this->next;
+    while (e != this)
+    {
+        if ((this->origin->y > e->origin->y)
+            != (this->origin->y > e->twin->origin->y))
         {
-            m = e;
-        }
-        else if (e->origin->position.x == m->origin->position.x)
-        {
-            if (e->origin->position.y < m->origin->position.y)
-            {
-                m = e;
-            }
+            num_intersections++;
         }
         e = e->next;
     }
-    return m;
-}
-
-bool HalfEdge::interior() const
-{
-    const HalfEdge* e = this->leftmost();
-    if (angle(e->prev->origin->position - e->origin->position,
-            e->next->origin->position - e->origin->position)
-            > 3.14159265359) return true;
-    return false;
+    if (num_intersections % 2 == 0) return false;
+    return true;
 }
 
 bool operator==(const HalfEdge& a, const HalfEdge& b)
@@ -58,10 +59,13 @@ bool operator!=(const HalfEdge& a, const HalfEdge& b)
 
 std::ostream& operator<<(std::ostream& os, const HalfEdge& e)
 {
-    os << &e << " " << e.origin->position << std::endl;
-    os << "\ttwin: " << e.twin << " " << e.twin->origin->position << std::endl;
-    os << "\tnext: " << e.next << " " << e.next->origin->position << std::endl;
-    os << "\tprev: " << e.prev << " " << e.prev->origin->position << std::endl;
+    os << &e << " " << (Vector) *e.origin << std::endl;
+    os << "\ttwin: " << e.twin << " " << (Vector) *e.twin->origin
+        << std::endl;
+    os << "\tnext: " << e.next << " " << (Vector) *e.next->origin
+        << std::endl;
+    os << "\tprev: " << e.prev << " " << (Vector) *e.prev->origin
+        << std::endl;
     os << "\tface: " << e.face << std::endl;
     return os;
 }
@@ -70,7 +74,7 @@ void sortClockwise(std::vector<HalfEdge*>& edges, const Vertex* center)
 {
     std::sort(edges.begin(), edges.end(),
         [center](const HalfEdge* a, const HalfEdge* b)
-        { return clockwise(a->twin->origin->position, b->twin->origin->position,
-              center->position); });
+        { return clockwise(*a->twin->origin, *b->twin->origin,
+                *center); });
 }
 

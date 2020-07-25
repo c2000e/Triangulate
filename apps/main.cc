@@ -10,27 +10,27 @@ void draw(const Mesh& m, SDL_Renderer* renderer)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     for (const Vertex& v : m.vertices)
     {
-        SDL_RenderDrawPoint(renderer, v.position.x, v.position.y);
+        SDL_RenderDrawPoint(renderer, v.x, 512 - v.y);
     }
     for (const HalfEdge& e : m.edges)
     {
-        SDL_RenderDrawLine(renderer, e.origin->position.x,
-            e.origin->position.y, e.twin->origin->position.x,
-            e.twin->origin->position.y);
+        SDL_RenderDrawLine(renderer, e.origin->x,
+            512 - e.origin->y, e.twin->origin->x,
+            512 - e.twin->origin->y);
     }
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     for (const Face& f : m.faces)
     {
         HalfEdge* s = f.edge;
-        SDL_RenderDrawLine(renderer, s->origin->position.x,
-            s->origin->position.y, s->twin->origin->position.x,
-            s->twin->origin->position.y);
+        SDL_RenderDrawLine(renderer, s->origin->x,
+            512 - s->origin->y, s->twin->origin->x,
+            512 - s->twin->origin->y);
         HalfEdge* e = s->next;
         while (*e != *s)
         {
-            SDL_RenderDrawLine(renderer, e->origin->position.x,
-                e->origin->position.y, e->twin->origin->position.x,
-                e->twin->origin->position.y);
+            SDL_RenderDrawLine(renderer, e->origin->x,
+                512 - e->origin->y, e->twin->origin->x,
+                512 - e->twin->origin->y);
             e = e->next;
         }
     }  
@@ -71,6 +71,8 @@ int main(int argc, char* arv[])
                     {
                         int x, y;
                         SDL_GetMouseState(&x, &y);
+                        y = 512 - y;
+
                         if (addEdges)
                         {
                             m.addEdge(x, y, lastX, lastY);
@@ -91,12 +93,19 @@ int main(int argc, char* arv[])
                         if (addEdges)
                         {
                             m.addEdge(lastX, lastY, firstX, firstY);
-                            m.createFaces();
                             addEdges = false;
                             redraw = true;
                         }
                     }
                     break;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_SPACE)
+                    {
+                        m.createFaces();
+                        m.triangulate();
+                        m.createFaces();
+                        redraw = true;
+                    }
             }
         }
 

@@ -15,7 +15,9 @@ class Mesh
     public:
         Vertex* addVertex(int x, int y);
         HalfEdge* addEdge(int x1, int y1, int x2, int y2);
+        HalfEdge* addEdge(Vertex* v1, Vertex* v2);
         void createFaces();
+        void triangulate();
 
         friend std::ostream& operator<<(std::ostream& os, const Mesh& m);
 

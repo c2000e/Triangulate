@@ -26,6 +26,8 @@ bool operator!=(const Face& a, const Face& b)
 std::ostream& operator<<(std::ostream& os, const Face& f)
 {
     os << &f << std::endl;
-    os << "\tedge: " << f.edge << " " << f.edge->origin->position << std::endl;
+    os << "\tedge: " << f.edge << " " << (Vector) *f.edge->origin
+        << std::endl;
     return os;
 }
+

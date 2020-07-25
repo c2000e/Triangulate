@@ -7,7 +7,7 @@ TEST(test_mesh, addVertex)
     Mesh m;
 
     Vertex* v1 = m.addVertex(0, 0);
-    ASSERT_EQ(v1->position, Vector(0, 0));
+    ASSERT_EQ((Vector) *v1, Vector(0, 0));
     
     Vertex* v2 = m.addVertex(0, 0);
     ASSERT_EQ(v1, v2);
