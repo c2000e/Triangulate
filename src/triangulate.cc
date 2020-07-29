@@ -2,8 +2,6 @@
 
 #include "Triangulate/mesh.h"
 
-#include <queue>
-#include <set>
 
 void makeMonotone(const Face* f, Mesh& m)
 {
@@ -92,14 +90,12 @@ void handleMergeVertex(HalfEdge* e, EdgeSet& edge_set, Mesh& m)
     }
     edge_set.erase(e->prev);
 
-    EdgeSet::iterator eIter = edge_set.upper_bound(e);
-    if (eIter != edge_set.begin()) --eIter;
-
-    if ((*eIter)->helper->merge)
+    HalfEdge* neighbor = e->leftNeighbor(edge_set.begin(), edge_set.end());
+    if (neighbor->helper->merge)
     {
-        m.addEdge(e->origin, (*eIter)->helper);
+        m.addEdge(e->origin, neighbor->helper);
     }
-    (*eIter)->helper = e->origin;
+    neighbor->helper = e->origin;
 }
 
 void handleRegularVertex(HalfEdge* e, EdgeSet& edge_set, Mesh& m)
@@ -116,14 +112,13 @@ void handleRegularVertex(HalfEdge* e, EdgeSet& edge_set, Mesh& m)
     }
     else
     {
-        EdgeSet::iterator eIter = edge_set.upper_bound(e);
-        if (eIter != edge_set.begin()) --eIter;
-        
-        if ((*eIter)->helper->merge)
+        HalfEdge* neighbor = e->leftNeighbor(edge_set.begin(),
+                edge_set.end());
+        if (neighbor->helper->merge)
         {
-            m.addEdge(e->origin, (*eIter)->helper);
+            m.addEdge(e->origin, neighbor->helper);
         }
-        (*eIter)->helper = e->origin;
+        neighbor->helper = e->origin;
     }
 }
 
